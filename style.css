@@ -26,7 +26,7 @@ body {
 }
 
 .todo-header {
-    margin-bottom: 22px;
+    margin-bottom: 20px;
 }
 
 .todo-header h1 {
@@ -43,6 +43,55 @@ body {
     font-weight: 500;
 }
 
+/* Add Task Form */
+.add-task-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.add-task-form input {
+    flex: 1;
+    padding: 11px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #1e293b;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.add-task-form input:focus {
+    border-color: #6366f1;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.add-task-form button {
+    padding: 11px 18px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background: #6366f1;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    white-space: nowrap;
+}
+
+.add-task-form button:hover {
+    background: #4f46e5;
+}
+
+.add-task-form button:active {
+    transform: scale(0.98);
+}
+
+/* Task List */
 ul#taskList {
     list-style: none;
     display: flex;
@@ -86,6 +135,7 @@ li.task-item:hover {
     font-size: 15px;
     font-weight: 600;
     color: #334155;
+    word-break: break-word;
 }
 
 .task-category {
@@ -95,6 +145,7 @@ li.task-item:hover {
     background: #eef2ff;
     padding: 3px 8px;
     border-radius: 6px;
+    flex-shrink: 0;
 }
 
 .todo-footer {

@@ -17,6 +17,16 @@
             <p id="todayDate">Today's Tasks</p>
         </header>
 
+        <form id="addTaskForm" class="add-task-form">
+            <input 
+                type="text" 
+                id="taskInput" 
+                placeholder="Enter a task title..." 
+                autocomplete="off"
+            >
+            <button type="submit" id="addBtn">Add</button>
+        </form>
+
         <ul id="taskList">
             <!-- Tasks rendered dynamically via JavaScript -->
         </ul>
