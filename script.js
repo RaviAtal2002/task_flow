@@ -1,9 +1,9 @@
-// Task list dataset
+// Task list dataset with completion status
 const tasks = [
-    { id: 1, title: "Learn HTML", category: "Basics" },
-    { id: 2, title: "Practice CSS", category: "Styling" },
-    { id: 3, title: "Learn JavaScript", category: "Logic" },
-    { id: 4, title: "Build a project", category: "Practice" }
+    { id: 1, title: "Learn HTML", completed: false },
+    { id: 2, title: "Practice CSS", completed: false },
+    { id: 3, title: "Learn JavaScript", completed: false },
+    { id: 4, title: "Build a project", completed: false }
 ];
 
 // DOM elements
@@ -19,22 +19,76 @@ function renderTasks() {
 
     tasks.forEach(function (task) {
         const li = document.createElement("li");
-        li.className = "task-item";
+        li.className = `task-item ${task.completed ? "completed" : ""}`;
+
+        const statusLabel = task.completed ? "Completed" : "Pending";
+        const statusClass = task.completed ? "status-completed" : "status-pending";
 
         li.innerHTML = `
-            <div class="task-left">
-                <span class="task-dot"></span>
+            <div class="task-left" data-id="${task.id}">
+                <input 
+                    type="checkbox" 
+                    class="task-check" 
+                    ${task.completed ? "checked" : ""} 
+                    data-id="${task.id}"
+                    aria-label="Toggle ${escapeHtml(task.title)}"
+                >
                 <span class="task-name">${escapeHtml(task.title)}</span>
             </div>
-            <span class="task-category">${escapeHtml(task.category || "Task")}</span>
+            <span class="status-badge ${statusClass}" data-id="${task.id}" title="Click to toggle status">
+                ${statusLabel}
+            </span>
         `;
+
+        // Event listener: Toggle completion when clicking the checkbox
+        const checkbox = li.querySelector(".task-check");
+        checkbox.addEventListener("change", function (e) {
+            e.stopPropagation();
+            toggleTaskStatus(task.id);
+        });
+
+        // Event listener: Toggle completion when clicking the status badge
+        const badge = li.querySelector(".status-badge");
+        badge.addEventListener("click", function (e) {
+            e.stopPropagation();
+            toggleTaskStatus(task.id);
+        });
+
+        // Event listener: Clicking the task left area also toggles completion
+        const taskLeft = li.querySelector(".task-left");
+        taskLeft.addEventListener("click", function (e) {
+            // Avoid double-firing if directly clicking checkbox
+            if (e.target !== checkbox) {
+                toggleTaskStatus(task.id);
+            }
+        });
 
         taskList.appendChild(li);
     });
 
-    // Update total count
+    // Update total & completed counts
+    updateTaskCount();
+}
+
+// Function to toggle a task between completed and pending
+function toggleTaskStatus(id) {
+    const task = tasks.find(function (t) {
+        return t.id === id;
+    });
+
+    if (task) {
+        task.completed = !task.completed;
+        renderTasks();
+    }
+}
+
+// Function to update the task counter
+function updateTaskCount() {
     if (taskCount) {
-        taskCount.textContent = `Total: ${tasks.length} tasks`;
+        const completedCount = tasks.filter(function (t) {
+            return t.completed;
+        }).length;
+        taskCount.textContent = `${completedCount} of ${tasks.length} completed`;
     }
 }
 
@@ -66,11 +120,11 @@ if (addTaskForm) {
             return;
         }
 
-        // Add new task to the list
+        // Add new task with initial status as pending (completed: false)
         tasks.push({
             id: Date.now(),
             title: title,
-            category: "New"
+            completed: false
         });
 
         // Re-render and clear input
