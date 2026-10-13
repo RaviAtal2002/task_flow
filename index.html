@@ -1,41 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Todo App</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My To-Do App</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
+
 <body>
+  <div class="todo-container">
+    <h1>My To-Do List</h1>
+    <p class="subtitle">Organize your day and get things done</p>
 
-    <div class="todo-container">
-        <header class="todo-header">
-            <h1>My Todo List</h1>
-            <p id="todayDate">Today's Tasks</p>
-        </header>
-
-        <form id="addTaskForm" class="add-task-form">
-            <input 
-                type="text" 
-                id="taskInput" 
-                placeholder="Enter a task title..." 
-                autocomplete="off"
-            >
-            <button type="submit" id="addBtn">Add</button>
-        </form>
-
-        <ul id="taskList">
-            <!-- Tasks rendered dynamically via JavaScript -->
-        </ul>
-
-        <div class="todo-footer">
-            <p id="taskCount">0 of 0 completed</p>
-        </div>
+    <!-- Add Task -->
+    <div class="input-box">
+      <input type="text" id="taskInput" placeholder="Enter a new task..." />
+      <button id="addBtn">Add</button>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Task Counter -->
+    <div class="stats">
+      <span>Total: <b id="totalTasks">0</b></span>
+      <span>Completed: <b id="completedTasks">0</b></span>
+      <span>Pending: <b id="pendingTasks">0</b></span>
+    </div>
+
+    <!-- Task List -->
+    <ul id="taskList"></ul>
+
+    <!-- Empty Message -->
+    <p id="emptyMessage">No tasks yet. Add your first task! 🎯</p>
+  </div>
+
+  <script src="./script.js"></script>
 </body>
+
 </html>
